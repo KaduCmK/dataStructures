@@ -103,10 +103,9 @@ void pop(Lista *lista) {
 int main() {
     Lista *l1 = linkedList();
 
-    append(l1, 1);
-    append(l1, 2);
-    append(l1, 3);
-    append(l1, 4);
+    for (int i = 1; i <= 4; i++) {
+        append(l1, i);
+    }
     remover(l1, 3);
 
     append(l1, 50);

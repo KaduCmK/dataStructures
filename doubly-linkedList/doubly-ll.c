@@ -58,6 +58,11 @@ int findIndex(Lista *lista, int valor) {
     return -1;
 }
 
+// Retorna o elemento presente no index fornecido
+void findAt(Lista *lista, int index) {
+    // TODO
+}
+
 // Adiciona um elemento ao inicio da lista
 void push(Lista *lista, int valor) {
     Node *n = newNode(valor);
@@ -76,8 +81,17 @@ void push(Lista *lista, int valor) {
 }
 
 // Adiciona um elemento na posicao i da lista
-void add(Lista *lista, int index) {
-    // TODO
+void add(Lista *lista, int valor, int index) {
+    Node *n = newNode(valor);
+    Node *aux = lista->inicio;
+    for (int i = 1; i < index-1; i++) {
+        aux = aux->proximo;
+    }
+    n->anterior = aux;
+    n->proximo = aux->proximo;
+    n->proximo->anterior = n;
+    aux->proximo = n;
+    lista->tamanho++;
 }
 
 // Adiciona um elemento ao final da lista
@@ -108,7 +122,14 @@ void removeFirst(Lista *lista) {
 
 // Remove o i-esimo elemento da lista
 void remover(Lista *lista, int index) {
-    // TODO
+    Node *remover = lista->inicio;
+    for (int i = 1; i < index; i++) {
+        remover = remover->proximo;
+    }
+    remover->anterior->proximo = remover->proximo;
+    remover->proximo->anterior = remover->anterior;
+    free(remover);
+    lista->tamanho--;
 }
 
 // Remove o ultimo elemento da lista
@@ -127,18 +148,15 @@ int main() {
         append(l1, i);
     }
 
+    remover(l1, 3);
+
     // removeFirst(l1);
     // pop(l1);
 
-    // display(l1);
+    display(l1);
     // printf("%d", findIndex(l1, 4));
     printf("tamanho da lista = %d\n\n", l1->tamanho);
 
-    printf("Liberar memoria...");
-    getchar();
-    free(l1);
-    printf("memoria liberada...");
-    getchar();
     
     return 0;
 }

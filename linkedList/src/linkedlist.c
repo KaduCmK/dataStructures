@@ -1,17 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct Node {
-        int valor;
-        struct Node *proximo;
-} Node;
-
-typedef struct lista {
-    Node *inicio;
-    Node *fim;
-    int tamanho;
-} Lista;
-
+#include "linkedlist.h"
 
 // funcao p instanciar uma lista vazia
 Lista * linkedList() {
@@ -21,6 +10,15 @@ Lista * linkedList() {
     l->tamanho = 0;
 
     return l;
+}
+
+// Instancia um novo Node vazio
+Node * newNode(int valor) {
+    Node *n = (Node*) malloc(sizeof(Node));
+    n->valor = valor;
+    n->proximo = NULL;
+
+    return n;
 }
 
 // O(n)
@@ -36,8 +34,7 @@ void display(Lista *lista) {
 
 void push(Lista *lista, int valor) {
     // Criando node do novo elemento
-    Node *n = (Node*) malloc(sizeof(Node));
-    n->valor = valor;
+    Node *n = newNode(valor);
 
     // checar se lista ta vazia
     if (lista->inicio == NULL) {
@@ -54,10 +51,7 @@ void push(Lista *lista, int valor) {
 }
 
 void append(Lista *lista, int valor) {
-    // Criando node do novo elemento
-    Node *n = (Node*) malloc(sizeof(Node));
-    n->valor = valor;
-    n->proximo = NULL;
+    Node *n = newNode(valor);
 
     // checar se lista ta vazia
     if (lista->inicio == NULL) {
@@ -72,7 +66,14 @@ void append(Lista *lista, int valor) {
     }
 }
 
+
+// Remove um Node da lista
 void remover(Lista *lista, int index) {
+    if (lista->tamanho == 0) {
+        printf("Lista ja está vazia");
+        return;
+    }
+    
     // navegando do inicio ate o index
     Node *previous = lista->inicio;
     for (int i = 1; i < index-1; i++) {
@@ -86,7 +87,6 @@ void remover(Lista *lista, int index) {
     lista->tamanho--;
 }
 
-// O(n)
 // Percorre toda a lista ate o penultimo elemento;
 // Elimina o ultimo elemento e atribui o penulimo ao ponteiro do fim da lista
 void pop(Lista *lista) {
@@ -98,24 +98,4 @@ void pop(Lista *lista) {
     free(lista->fim);
     lista->fim = prev;
     lista->tamanho--;
-}
-
-int main() {
-    Lista *l1 = linkedList();
-
-    for (int i = 1; i <= 4; i++) {
-        append(l1, i);
-    }
-    remover(l1, 3);
-
-    append(l1, 50);
-    display(l1);
-    pop(l1);
-    display(l1);
-
-    printf("%d", l1->tamanho);
-
-    free(l1);
-
-    return 0;
 }

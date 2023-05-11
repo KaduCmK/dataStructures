@@ -37,6 +37,18 @@ Node * newNode(int valor) {
     return n;
 }
 
+
+// Deleta a lista por completo
+void destroy(Lista *lista) {
+    Node *n = lista->inicio;
+    while (n->proximo != NULL) {
+        n = n->proximo;
+        free(n->anterior);
+    }
+    free(n);
+    free(lista);
+}
+
 // Exibe os valores da lista, do inicio ao fim
 void display(Lista *lista) {
     Node *n = lista->inicio;
@@ -156,7 +168,7 @@ int main() {
     display(l1);
     // printf("%d", findIndex(l1, 4));
     printf("tamanho da lista = %d\n\n", l1->tamanho);
-
+    destroy(l1);
     
     return 0;
 }

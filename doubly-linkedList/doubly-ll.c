@@ -71,8 +71,13 @@ int findIndex(Lista *lista, int valor) {
 }
 
 // Retorna o elemento presente no index fornecido
-void findAt(Lista *lista, int index) {
-    // TODO
+int findAt(Lista *lista, int index) {
+    Node *n = lista->inicio;
+    for (int i = 0; i < index-1; i++) {
+        n = n->proximo;
+    }
+
+    return n->valor;
 }
 
 // Adiciona um elemento ao inicio da lista
@@ -160,15 +165,10 @@ int main() {
         append(l1, i);
     }
 
-    remover(l1, 3);
-
-    // removeFirst(l1);
-    // pop(l1);
-
     display(l1);
+    printf("%d\n", findAt(l1, 2));
     // printf("%d", findIndex(l1, 4));
     printf("tamanho da lista = %d\n\n", l1->tamanho);
     destroy(l1);
-    
     return 0;
 }
